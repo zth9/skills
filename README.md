@@ -13,6 +13,7 @@ Skills 是可复用的工具和脚本，用于增强 AI 编程助手（如 Claud
 | 技能 | 描述 |
 |------|------|
 | [mermaid-to-img](./mermaid-to-img/) | 将 Mermaid 图表转换为高质量图片（PNG/JPG/SVG/PDF） |
+| [mac-notifier](./mac-notifier/) | 当 Claude Code 完成任务或等待输入时发送 macOS 原生通知 |
 
 ## 安装
 
