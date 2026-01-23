@@ -1,0 +1,16 @@
+{
+  "name": "zth9-skills",
+  "version": "1.0.0",
+  "description": "A collection of skills for AI coding assistants",
+  "author": "zth9",
+  "repository": "https://github.com/zth9/skills",
+  "skills": [
+    {
+      "name": "mermaid-to-img",
+      "path": "mermaid-to-img",
+      "description": "Convert Mermaid diagrams to high-quality images with multiple themes, formats (PNG/JPG/SVG/PDF), custom fonts, and background options.",
+      "version": "1.0.0",
+      "tags": ["mermaid", "diagram", "image", "converter"]
+    }
+  ]
+}
