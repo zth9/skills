@@ -71,6 +71,7 @@ backup_settings() {
 generate_hooks_config() {
     local stop_sound="${1:-Glass}"
     local permission_sound="${2:-Funk}"
+    local elicitation_sound="${3:-Ping}"
 
     cat << EOF
 {
@@ -93,6 +94,17 @@ generate_hooks_config() {
         }
       ]
     }
+  ],
+  "Notification": [
+    {
+      "matcher": "elicitation_dialog",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "$NOTIFY_SCRIPT -m 'Input needed for MCP tool' -s $elicitation_sound"
+        }
+      ]
+    }
   ]
 }
 EOF
@@ -102,6 +114,7 @@ EOF
 install_hooks() {
     local stop_sound="${1:-Glass}"
     local permission_sound="${2:-Funk}"
+    local elicitation_sound="${3:-Ping}"
 
     print_info "Installing Mac Notifier hooks..."
 
@@ -111,7 +124,7 @@ install_hooks() {
 
     # Generate new hooks config
     local hooks_config
-    hooks_config=$(generate_hooks_config "$stop_sound" "$permission_sound")
+    hooks_config=$(generate_hooks_config "$stop_sound" "$permission_sound" "$elicitation_sound")
 
     # Check if hooks already exist
     if echo "$current_settings" | jq -e '.hooks' > /dev/null 2>&1; then
@@ -209,8 +222,9 @@ show_help() {
     echo "  help        Show this help message"
     echo ""
     echo "Options for install:"
-    echo "  --stop-sound SOUND       Sound for task completion (default: Glass)"
-    echo "  --permission-sound SOUND Sound for permission prompt (default: Funk)"
+    echo "  --stop-sound SOUND        Sound for task completion (default: Glass)"
+    echo "  --permission-sound SOUND  Sound for permission prompt (default: Funk)"
+    echo "  --elicitation-sound SOUND Sound for MCP elicitation (default: Ping)"
     echo ""
     echo "Available sounds: Basso, Blow, Bottle, Frog, Funk, Glass, Hero,"
     echo "                  Morse, Ping, Pop, Purr, Sosumi, Submarine, Tink"
@@ -229,6 +243,7 @@ main() {
 
     local stop_sound="Glass"
     local permission_sound="Funk"
+    local elicitation_sound="Ping"
 
     # Parse options
     while [[ $# -gt 0 ]]; do
@@ -239,6 +254,10 @@ main() {
                 ;;
             --permission-sound)
                 permission_sound="$2"
+                shift 2
+                ;;
+            --elicitation-sound)
+                elicitation_sound="$2"
                 shift 2
                 ;;
             *)
@@ -253,7 +272,7 @@ main() {
             ensure_settings_dir
             ensure_settings_file
             backup_settings
-            install_hooks "$stop_sound" "$permission_sound"
+            install_hooks "$stop_sound" "$permission_sound" "$elicitation_sound"
             test_notification
             echo ""
             print_info "Restart Claude Code for changes to take effect."
