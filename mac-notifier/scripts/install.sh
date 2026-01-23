@@ -70,8 +70,7 @@ backup_settings() {
 # Generate hooks configuration
 generate_hooks_config() {
     local stop_sound="${1:-Glass}"
-    local idle_sound="${2:-Ping}"
-    local permission_sound="${3:-Funk}"
+    local permission_sound="${2:-Funk}"
 
     cat << EOF
 {
@@ -85,18 +84,8 @@ generate_hooks_config() {
       ]
     }
   ],
-  "Notification": [
+  "PermissionRequest": [
     {
-      "matcher": "idle_prompt",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "$NOTIFY_SCRIPT -m 'Waiting for your input' -s $idle_sound"
-        }
-      ]
-    },
-    {
-      "matcher": "permission_prompt",
       "hooks": [
         {
           "type": "command",
@@ -112,8 +101,7 @@ EOF
 # Install hooks to settings
 install_hooks() {
     local stop_sound="${1:-Glass}"
-    local idle_sound="${2:-Ping}"
-    local permission_sound="${3:-Funk}"
+    local permission_sound="${2:-Funk}"
 
     print_info "Installing Mac Notifier hooks..."
 
@@ -123,7 +111,7 @@ install_hooks() {
 
     # Generate new hooks config
     local hooks_config
-    hooks_config=$(generate_hooks_config "$stop_sound" "$idle_sound" "$permission_sound")
+    hooks_config=$(generate_hooks_config "$stop_sound" "$permission_sound")
 
     # Check if hooks already exist
     if echo "$current_settings" | jq -e '.hooks' > /dev/null 2>&1; then
@@ -222,7 +210,6 @@ show_help() {
     echo ""
     echo "Options for install:"
     echo "  --stop-sound SOUND       Sound for task completion (default: Glass)"
-    echo "  --idle-sound SOUND       Sound for idle prompt (default: Ping)"
     echo "  --permission-sound SOUND Sound for permission prompt (default: Funk)"
     echo ""
     echo "Available sounds: Basso, Blow, Bottle, Frog, Funk, Glass, Hero,"
@@ -230,7 +217,7 @@ show_help() {
     echo ""
     echo "Examples:"
     echo "  $0 install"
-    echo "  $0 install --stop-sound Hero --idle-sound Pop"
+    echo "  $0 install --stop-sound Hero --permission-sound Pop"
     echo "  $0 uninstall"
     echo "  $0 status"
 }
@@ -241,7 +228,6 @@ main() {
     shift || true
 
     local stop_sound="Glass"
-    local idle_sound="Ping"
     local permission_sound="Funk"
 
     # Parse options
@@ -249,10 +235,6 @@ main() {
         case $1 in
             --stop-sound)
                 stop_sound="$2"
-                shift 2
-                ;;
-            --idle-sound)
-                idle_sound="$2"
                 shift 2
                 ;;
             --permission-sound)
@@ -271,7 +253,7 @@ main() {
             ensure_settings_dir
             ensure_settings_file
             backup_settings
-            install_hooks "$stop_sound" "$idle_sound" "$permission_sound"
+            install_hooks "$stop_sound" "$permission_sound"
             test_notification
             echo ""
             print_info "Restart Claude Code for changes to take effect."
