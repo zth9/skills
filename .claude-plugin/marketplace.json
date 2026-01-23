@@ -17,6 +17,15 @@
       "skills": [
         "./mermaid-to-img"
       ]
+    },
+    {
+      "name": "mac-notifier",
+      "description": "Send native macOS notifications when Claude Code completes tasks or awaits user input",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./mac-notifier"
+      ]
     }
   ]
 }
