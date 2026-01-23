@@ -10,21 +10,12 @@
   },
   "plugins": [
     {
-      "name": "mermaid-tools",
-      "description": "Mermaid diagram processing tools including conversion to high-quality images",
+      "name": "mermaid-to-img",
+      "description": "Convert Mermaid diagrams to high-quality images with multiple themes and formats",
       "source": "./",
       "strict": false,
       "skills": [
         "./mermaid-to-img"
-      ]
-    },
-    {
-      "name": "mac-notifier",
-      "description": "Native macOS notifications for Claude Code task completion and user input prompts",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./mac-notifier"
       ]
     }
   ]
