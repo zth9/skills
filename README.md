@@ -16,21 +16,38 @@ Skills 是可复用的工具和脚本，用于增强 AI 编程助手（如 Claud
 
 ## 安装
 
-### Claude Code
+### 方式一：在 Claude Code 中直接安装
+
+1. 添加插件市场：
+
+```
+/plugin marketplace add zth9/skills
+```
+
+2. 安装单个技能：
+
+```
+/plugin install mermaid-to-img@zth9/skills
+```
+
+### 方式二：使用 openskills 工具
+
+```bash
+openskills install zth9/skills --global
+```
+
+### 方式三：手动复制
 
 将技能文件夹复制到 Claude Code 的 skills 目录：
 
 ```bash
-cp -r mermaid-to-img ~/.claude/skills/
+git clone https://github.com/zth9/skills.git
+cp -r skills/mermaid-to-img ~/.claude/skills/
 ```
 
 ### 其他 AI 助手
 
 每个技能都包含一个 `SKILL.md` 文件，其中的指令可用于任何 AI 编程助手。
-
-## 贡献
-
-欢迎贡献！请随时提交 Pull Request。
 
 ## 许可证
 

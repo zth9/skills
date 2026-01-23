@@ -16,21 +16,38 @@ Skills are reusable tools and scripts that enhance AI coding assistants (like Cl
 
 ## Installation
 
-### For Claude Code
+### Option 1: Direct Installation in Claude Code
 
-Copy the skill folder to your Claude Code skills directory:
+1. Add the plugin marketplace:
+
+```
+/plugin marketplace add zth9/skills
+```
+
+2. Install individual skills:
+
+```
+/plugin install mermaid-to-img@zth9/skills
+```
+
+### Option 2: Using openskills Tool
 
 ```bash
-cp -r mermaid-to-img ~/.claude/skills/
+openskills install zth9/skills --global
+```
+
+### Option 3: Manual Copy
+
+Clone and copy the skill folder to your Claude Code skills directory:
+
+```bash
+git clone https://github.com/zth9/skills.git
+cp -r skills/mermaid-to-img ~/.claude/skills/
 ```
 
 ### For Other AI Assistants
 
 Each skill contains a `SKILL.md` file with instructions that can be used with any AI coding assistant.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
