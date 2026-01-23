@@ -1,0 +1,37 @@
+中文 | [English](./README_EN.md)
+
+# Skills
+
+从日常学习、工作中沉淀出来的 skills，用于构建个人 AI Workflow。
+
+## 什么是 Skills？
+
+Skills 是可复用的工具和脚本，用于增强 AI 编程助手（如 Claude Code、Cursor 等）的专业能力。每个技能都是独立的，可以轻松集成到你的工作流程中。
+
+## 可用技能
+
+| 技能 | 描述 |
+|------|------|
+| [mermaid-to-img](./mermaid-to-img/) | 将 Mermaid 图表转换为高质量图片（PNG/JPG/SVG/PDF） |
+
+## 安装
+
+### Claude Code
+
+将技能文件夹复制到 Claude Code 的 skills 目录：
+
+```bash
+cp -r mermaid-to-img ~/.claude/skills/
+```
+
+### 其他 AI 助手
+
+每个技能都包含一个 `SKILL.md` 文件，其中的指令可用于任何 AI 编程助手。
+
+## 贡献
+
+欢迎贡献！请随时提交 Pull Request。
+
+## 许可证
+
+MIT 许可证 - 详见 [LICENSE](./LICENSE)。
