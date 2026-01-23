@@ -166,19 +166,21 @@ Claude Code supports several hook events that can trigger notifications:
 
 | Event | Description |
 |-------|-------------|
-| `Stop` | Claude completes its response |
-| `Notification` with `idle_prompt` | Claude waits for user input (after 60s) |
-| `Notification` with `permission_prompt` | Claude needs permission approval |
+| `Stop` | Claude completes its response (immediate notification) |
+| `Notification` with `idle_prompt` | Claude waits for user input (triggers after 60s of idle time - this is a hardcoded delay in Claude Code) |
+| `Notification` with `permission_prompt` | Claude needs permission approval (immediate notification) |
 | `SubagentStop` | A sub-agent task completes |
 | `PostToolUse` | After a tool executes successfully |
+
+> **Note**: The `Stop` and `permission_prompt` events trigger immediately. The `idle_prompt` event has a built-in 60-second delay in Claude Code that cannot be configured. If you need immediate notifications when Claude finishes a task, the `Stop` hook is the best option.
 
 ## How It Works
 
 The installation script modifies your `~/.claude/settings.json` to register hooks:
 
-1. **Stop Hook**: Triggered when Claude finishes responding to your request
-2. **Notification Hook (idle_prompt)**: Triggered when Claude has been idle for 60 seconds waiting for your input
-3. **Notification Hook (permission_prompt)**: Triggered when Claude needs permission to execute a command
+1. **Stop Hook**: Triggered immediately when Claude finishes responding to your request
+2. **Notification Hook (idle_prompt)**: Triggered when Claude has been idle for 60 seconds waiting for your input (this delay is built into Claude Code and cannot be changed)
+3. **Notification Hook (permission_prompt)**: Triggered immediately when Claude needs permission to execute a command
 
 ## Troubleshooting
 
