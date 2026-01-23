@@ -3,6 +3,17 @@ import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Check if launched from notification click (no command line args means reactivation)
+        // When user clicks notification, macOS may relaunch app without our custom args
+        let args = CommandLine.arguments
+        let hasMessageArg = args.contains("-message") || args.contains("-m")
+
+        if !hasMessageArg {
+            // Launched from notification click or without args, just exit
+            NSApp.terminate(nil)
+            return
+        }
+
         let center = UNUserNotificationCenter.current()
         center.delegate = self
 
@@ -13,10 +24,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
                 // Fallback to osascript
                 self.sendNotificationViaAppleScript()
             }
-            DispatchQueue.main.async {
+            // Give notification time to be delivered before exiting
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 NSApp.terminate(nil)
             }
         }
+    }
+
+    // Handle notification click - just exit without sending new notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+        NSApp.terminate(nil)
     }
 
     func sendNotification() {
