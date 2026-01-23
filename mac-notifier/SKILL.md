@@ -1,9 +1,8 @@
 ---
 name: mac-notifier
 description: Send native macOS notifications when Claude Code completes tasks or awaits user input. Perfect for multitasking while Claude works in the background.
-version: 1.1.0
+version: 2.0.0
 entry_point: scripts/notify.sh
-hooks: hooks/hooks.json
 dependencies: ["jq"]
 ---
 
@@ -14,25 +13,13 @@ A lightweight utility that sends native macOS notifications when Claude Code eve
 ## Features
 
 - Native macOS notifications via AppleScript
-- **Auto-enabled as plugin** - hooks are automatically active when plugin is enabled
 - Customizable notification sounds
 - Support for task completion, permission request, and MCP elicitation events
-- Zero external dependencies (except `jq` for manual installation)
+- Zero external dependencies (except `jq` for installation script)
 
-## Quick Start
+## Installation
 
-### As a Plugin (Recommended)
-
-When installed as a Claude Code plugin, hooks are automatically enabled. No additional configuration needed.
-
-```bash
-# The plugin hooks are defined in hooks/hooks.json and are
-# automatically merged with your settings when the plugin is enabled
-```
-
-### Manual Installation
-
-If you prefer to install hooks manually to your user settings:
+Use the installation script to configure hooks in your Claude Code settings:
 
 ```bash
 # Install hooks to Claude Code
@@ -184,15 +171,9 @@ Claude Code supports several hook events that can trigger notifications:
 | `SubagentStop` | A sub-agent task completes |
 | `PostToolUse` | After a tool executes successfully |
 
-> **Note**: This plugin uses `Stop`, `PermissionRequest`, and `Notification` (elicitation_dialog) hooks which trigger immediately when human intervention is needed. The `idle_prompt` is not used because it has a built-in 60-second delay.
+> **Note**: This skill uses `Stop`, `PermissionRequest`, and `Notification` (elicitation_dialog) hooks which trigger immediately when human intervention is needed. The `idle_prompt` is not used because it has a built-in 60-second delay.
 
 ## How It Works
-
-### As a Plugin
-
-The plugin provides a `hooks/hooks.json` file that Claude Code automatically merges with your settings when the plugin is enabled. When you disable or uninstall the plugin, these hooks are automatically removed.
-
-### Manual Installation
 
 The installation script modifies your `~/.claude/settings.json` to register hooks:
 
