@@ -1,6 +1,6 @@
 ---
 name: mac-notifier
-description: Send native macOS notifications when Claude Code completes tasks or awaits user input. Perfect for multitasking while Claude works in the background.
+description: Send native macOS notifications when Claude Code completes tasks or awaits user input. Use when user wants to set up desktop notifications, enable alerts for task completion, or configure Claude Code hooks for background monitoring.
 version: 2.0.0
 entry_point: scripts/notify.sh
 dependencies: ["jq"]
