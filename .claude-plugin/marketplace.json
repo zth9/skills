@@ -26,6 +26,15 @@
       "skills": [
         "./mac-notifier"
       ]
+    },
+    {
+      "name": "text-to-audio",
+      "description": "Convert text to speech using easyVoice with multi-character dubbing support",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./text-to-audio"
+      ]
     }
   ]
 }

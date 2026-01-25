@@ -1,6 +1,6 @@
 ---
 name: mermaid-to-img
-description: Convert Mermaid diagrams to high-quality images with multiple themes, formats (PNG/JPG/SVG/PDF), custom fonts, and background options.
+description: Convert Mermaid diagrams to high-quality images (PNG/JPG/SVG/PDF). Use when user wants to export, save, or convert Mermaid code to image files, or needs to visualize diagrams with custom themes.
 version: 1.0.0
 entry_point: scripts/mermaid_to_img.py
 dependencies: ["node", "npx", "@mermaid-js/mermaid-cli"]

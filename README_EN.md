@@ -14,6 +14,7 @@ Skills are reusable tools and scripts that enhance AI coding assistants (like Cl
 |-------|-------------|
 | [mermaid-to-img](./mermaid-to-img/) | Convert Mermaid diagrams to high-quality images (PNG/JPG/SVG/PDF) |
 | [mac-notifier](./mac-notifier/) | Send native macOS notifications when Claude Code completes tasks or awaits input |
+| [text-to-audio](./text-to-audio/) | Convert text to speech using easyVoice with multi-character dubbing support |
 
 ## Installation
 
