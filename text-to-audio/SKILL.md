@@ -12,7 +12,9 @@ dependencies: ["node", "pnpm", "ffmpeg"]
 
 # Text to Audio
 
-Use [easyVoice](https://github.com/cosin2077/easyVoice) to convert text to high-quality speech audio.
+Convert text to high-quality speech audio using [easyVoice](https://github.com/cosin2077/easyVoice).
+
+> **Note**: This skill depends on the [easyVoice](https://github.com/cosin2077/easyVoice) project. The wrapper script will automatically clone it to `scripts/easyvoice/` on first run. The cloned directory is excluded from version control via `.gitignore`.
 
 ## Features
 
