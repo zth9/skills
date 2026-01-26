@@ -1,7 +1,7 @@
 ---
 name: mac-notifier
 description: Send native macOS notifications when Claude Code completes tasks or awaits user input. Use when user wants to set up desktop notifications, enable alerts for task completion, or configure Claude Code hooks for background monitoring.
-version: 2.0.0
+version: 2.1.0
 entry_point: scripts/notify.sh
 dependencies: ["jq"]
 ---
@@ -15,6 +15,8 @@ A lightweight utility that sends native macOS notifications when Claude Code eve
 - Native macOS notifications via AppleScript
 - Customizable notification sounds
 - Support for task completion, permission request, and MCP elicitation events
+- **i18n support**: Auto-detect language from `$LANG` (zh/en)
+- **Directory info**: Show project directory in notification subtitle
 - Zero external dependencies (except `jq` for installation script)
 
 ## Installation
@@ -25,8 +27,14 @@ Use the installation script to configure hooks in your Claude Code settings:
 # Install hooks to Claude Code
 ./scripts/install.sh install
 
-# Or with custom sounds
+# With custom sounds
 ./scripts/install.sh install --stop-sound Hero --permission-sound Pop
+
+# With Chinese locale and directory info
+./scripts/install.sh install --locale zh --directory-format short
+
+# With English locale and full directory path
+./scripts/install.sh install --locale en --directory-format full
 ```
 
 This will automatically:
@@ -59,8 +67,10 @@ Commands:
   help        Show help message
 
 Options for install:
-  --stop-sound SOUND       Sound for task completion (default: Glass)
-  --permission-sound SOUND Sound for permission prompt (default: Funk)
+  --stop-sound SOUND        Sound for task completion (default: Glass)
+  --permission-sound SOUND  Sound for permission prompt (default: Funk)
+  --locale LOCALE           Language: zh|en (default: auto-detect from $LANG)
+  --directory-format FMT    Directory format: short|full|none (default: none)
 ```
 
 ## Manual Configuration
@@ -75,7 +85,7 @@ If you prefer manual configuration, add the following to your `~/.claude/setting
         "hooks": [
           {
             "type": "command",
-            "command": "/path/to/mac-notifier/scripts/notify.sh -m 'Task completed'"
+            "command": "/path/to/mac-notifier/scripts/notify.sh -k task_completed --locale zh --directory-format short"
           }
         ]
       }
@@ -85,7 +95,7 @@ If you prefer manual configuration, add the following to your `~/.claude/setting
         "hooks": [
           {
             "type": "command",
-            "command": "/path/to/mac-notifier/scripts/notify.sh -m 'Permission needed' -s Funk"
+            "command": "/path/to/mac-notifier/scripts/notify.sh -k permission_needed --locale zh --directory-format short -s Funk"
           }
         ]
       }
@@ -96,7 +106,7 @@ If you prefer manual configuration, add the following to your `~/.claude/setting
         "hooks": [
           {
             "type": "command",
-            "command": "/path/to/mac-notifier/scripts/notify.sh -m 'Input needed for MCP tool' -s Ping"
+            "command": "/path/to/mac-notifier/scripts/notify.sh -k input_needed --locale zh --directory-format short -s Ping"
           }
         ]
       }
@@ -123,6 +133,15 @@ If you prefer manual configuration, add the following to your `~/.claude/setting
 # Silent notification (no sound)
 ./scripts/notify.sh -m "Silent update" --no-sound
 
+# Using predefined message key with localization
+./scripts/notify.sh -k task_completed --locale zh
+
+# With directory info (project name)
+./scripts/notify.sh -k task_completed --directory-format short
+
+# With full directory path
+./scripts/notify.sh -m "Build done" --directory-format full
+
 # Show help
 ./scripts/notify.sh --help
 ```
@@ -133,10 +152,40 @@ If you prefer manual configuration, add the following to your `~/.claude/setting
 |-----------|-------------|
 | `-t, --title` | Notification title (default: `Claude Code`) |
 | `-m, --message` | Notification message |
+| `-k, --message-key` | Predefined message key: `task_completed`, `permission_needed`, `input_needed` |
 | `-s, --sound` | Sound name (default: `Glass`) |
 | `--subtitle` | Notification subtitle |
+| `--locale` | Language: `zh` or `en` (default: auto-detect from `$LANG`) |
+| `--directory-format` | Directory format: `short` (project name), `full` (absolute path), `none` |
 | `--no-sound` | Disable notification sound |
 | `-h, --help` | Show help message |
+
+## Localization
+
+The script supports Chinese (zh) and English (en) localization:
+
+| Message Key | English | Chinese |
+|-------------|---------|---------|
+| `task_completed` | Task completed | 任务已完成 |
+| `permission_needed` | Permission needed | 需要权限确认 |
+| `input_needed` | Input needed for MCP tool | MCP 工具需要输入 |
+
+Language is auto-detected from `$LANG` environment variable, or can be specified via `--locale` parameter.
+
+## Directory Format
+
+The `--directory-format` option controls how directory info is displayed in the notification subtitle:
+
+| Format | Description | Example |
+|--------|-------------|---------|
+| `short` | Project name (basename) | `skills` |
+| `full` | Full absolute path | `/Users/tian/osproject/zth9/skills` |
+| `none` | No directory info (default) | - |
+
+**Directory detection priority:**
+1. `CLAUDE_PROJECT_DIR` environment variable (set by Claude Code)
+2. Git repository root directory
+3. Current working directory (`PWD`)
 
 ## Available Sounds
 
