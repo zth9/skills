@@ -8,6 +8,20 @@
 
 Skills 是可复用的工具和脚本，用于增强 AI 编程助手（如 Claude Code、Cursor 等）的专业能力。每个技能都是独立的，可以轻松集成到你的工作流程中。
 
+## 工作原理
+
+<p align="center">
+  <img src="./assets/skill-architecture.png" alt="Skill Architecture" width="600">
+</p>
+
+当你在 Claude Code 中调用 `/skill-name` 命令时：
+
+1. **解析命令** - Claude Code 识别并解析 skill 命令和参数
+2. **加载配置** - 读取 `SKILL.md` 获取 skill 的元数据和入口点
+3. **检查依赖** - 验证所需的依赖是否已安装
+4. **执行脚本** - 运行 `entry_point` 指定的脚本（Shell 或 Python）
+5. **返回结果** - 将执行结果返回给用户
+
 ## 可用技能
 
 | 技能 | 描述 |

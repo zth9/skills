@@ -8,6 +8,20 @@ Skills accumulated from daily learning and work, used to build personal AI Workf
 
 Skills are reusable tools and scripts that enhance AI coding assistants (like Claude Code, Cursor, etc.) with specialized capabilities. Each skill is self-contained and can be easily integrated into your workflow.
 
+## How It Works
+
+<p align="center">
+  <img src="./assets/skill-architecture.png" alt="Skill Architecture" width="600">
+</p>
+
+When you invoke a `/skill-name` command in Claude Code:
+
+1. **Parse Command** - Claude Code identifies and parses the skill command and arguments
+2. **Load Config** - Reads `SKILL.md` to get skill metadata and entry point
+3. **Check Dependencies** - Verifies required dependencies are installed
+4. **Execute Script** - Runs the script specified by `entry_point` (Shell or Python)
+5. **Return Result** - Returns execution results to the user
+
 ## Available Skills
 
 | Skill | Description |
