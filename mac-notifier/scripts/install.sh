@@ -72,6 +72,17 @@ generate_hooks_config() {
     local stop_sound="${1:-Glass}"
     local permission_sound="${2:-Funk}"
     local elicitation_sound="${3:-Ping}"
+    local locale="${4:-}"
+    local directory_format="${5:-none}"
+
+    # Build common options
+    local common_opts=""
+    if [[ -n "$locale" ]]; then
+        common_opts="$common_opts --locale $locale"
+    fi
+    if [[ "$directory_format" != "none" ]]; then
+        common_opts="$common_opts --directory-format $directory_format"
+    fi
 
     cat << EOF
 {
@@ -80,7 +91,7 @@ generate_hooks_config() {
       "hooks": [
         {
           "type": "command",
-          "command": "$NOTIFY_SCRIPT -m 'Task completed' -s $stop_sound"
+          "command": "$NOTIFY_SCRIPT -k task_completed$common_opts -s $stop_sound"
         }
       ]
     }
@@ -90,7 +101,7 @@ generate_hooks_config() {
       "hooks": [
         {
           "type": "command",
-          "command": "$NOTIFY_SCRIPT -m 'Permission needed' -s $permission_sound"
+          "command": "$NOTIFY_SCRIPT -k permission_needed$common_opts -s $permission_sound"
         }
       ]
     }
@@ -101,7 +112,7 @@ generate_hooks_config() {
       "hooks": [
         {
           "type": "command",
-          "command": "$NOTIFY_SCRIPT -m 'Input needed for MCP tool' -s $elicitation_sound"
+          "command": "$NOTIFY_SCRIPT -k input_needed$common_opts -s $elicitation_sound"
         }
       ]
     }
@@ -115,6 +126,8 @@ install_hooks() {
     local stop_sound="${1:-Glass}"
     local permission_sound="${2:-Funk}"
     local elicitation_sound="${3:-Ping}"
+    local locale="${4:-}"
+    local directory_format="${5:-none}"
 
     print_info "Installing Mac Notifier hooks..."
 
@@ -124,28 +137,26 @@ install_hooks() {
 
     # Generate new hooks config
     local hooks_config
-    hooks_config=$(generate_hooks_config "$stop_sound" "$permission_sound" "$elicitation_sound")
+    hooks_config=$(generate_hooks_config "$stop_sound" "$permission_sound" "$elicitation_sound" "$locale" "$directory_format")
 
-    # Check if hooks already exist
-    if echo "$current_settings" | jq -e '.hooks' > /dev/null 2>&1; then
-        # Merge with existing hooks
-        print_info "Merging with existing hooks configuration..."
+    # Merge with existing hooks (or create new hooks section)
+    print_info "Installing hooks configuration..."
 
-        local new_settings
-        new_settings=$(echo "$current_settings" | jq --argjson newhooks "$hooks_config" '
-            .hooks = (.hooks // {}) * $newhooks
-        ')
+    local new_settings
+    new_settings=$(echo "$current_settings" | jq --argjson newhooks "$hooks_config" '
+        .hooks = (.hooks // {}) * $newhooks
+    ') || {
+        print_error "Failed to merge hooks configuration"
+        exit 1
+    }
 
-        echo "$new_settings" | jq '.' > "$CLAUDE_SETTINGS_FILE"
-    else
-        # Add new hooks section
-        local new_settings
-        new_settings=$(echo "$current_settings" | jq --argjson newhooks "$hooks_config" '
-            .hooks = $newhooks
-        ')
-
-        echo "$new_settings" | jq '.' > "$CLAUDE_SETTINGS_FILE"
+    # Validate result is not empty
+    if [[ -z "$new_settings" ]]; then
+        print_error "Generated empty settings, aborting"
+        exit 1
     fi
+
+    echo "$new_settings" | jq '.' > "$CLAUDE_SETTINGS_FILE"
 
     print_success "Hooks installed successfully!"
 }
@@ -203,8 +214,20 @@ show_status() {
 
 # Test notification
 test_notification() {
+    local locale="${1:-}"
+    local directory_format="${2:-none}"
+
     print_info "Testing notification..."
-    "$NOTIFY_SCRIPT" -m "Mac Notifier installed successfully!" -s Glass
+
+    local opts=""
+    if [[ -n "$locale" ]]; then
+        opts="$opts --locale $locale"
+    fi
+    if [[ "$directory_format" != "none" ]]; then
+        opts="$opts --directory-format $directory_format"
+    fi
+
+    "$NOTIFY_SCRIPT" -m "Mac Notifier installed successfully!" -s Glass $opts
     print_success "If you saw a notification, the installation is working!"
 }
 
@@ -225,13 +248,16 @@ show_help() {
     echo "  --stop-sound SOUND        Sound for task completion (default: Glass)"
     echo "  --permission-sound SOUND  Sound for permission prompt (default: Funk)"
     echo "  --elicitation-sound SOUND Sound for MCP elicitation (default: Ping)"
+    echo "  --locale LOCALE           Language: zh|en (default: auto-detect from \$LANG)"
+    echo "  --directory-format FMT    Directory format: short|full|none (default: none)"
     echo ""
     echo "Available sounds: Basso, Blow, Bottle, Frog, Funk, Glass, Hero,"
     echo "                  Morse, Ping, Pop, Purr, Sosumi, Submarine, Tink"
     echo ""
     echo "Examples:"
     echo "  $0 install"
-    echo "  $0 install --stop-sound Hero --permission-sound Pop"
+    echo "  $0 install --locale zh --directory-format short"
+    echo "  $0 install --stop-sound Hero --permission-sound Pop --directory-format full"
     echo "  $0 uninstall"
     echo "  $0 status"
 }
@@ -244,6 +270,8 @@ main() {
     local stop_sound="Glass"
     local permission_sound="Funk"
     local elicitation_sound="Ping"
+    local locale=""
+    local directory_format="none"
 
     # Parse options
     while [[ $# -gt 0 ]]; do
@@ -260,6 +288,14 @@ main() {
                 elicitation_sound="$2"
                 shift 2
                 ;;
+            --locale)
+                locale="$2"
+                shift 2
+                ;;
+            --directory-format)
+                directory_format="$2"
+                shift 2
+                ;;
             *)
                 shift
                 ;;
@@ -272,8 +308,8 @@ main() {
             ensure_settings_dir
             ensure_settings_file
             backup_settings
-            install_hooks "$stop_sound" "$permission_sound" "$elicitation_sound"
-            test_notification
+            install_hooks "$stop_sound" "$permission_sound" "$elicitation_sound" "$locale" "$directory_format"
+            test_notification "$locale" "$directory_format"
             echo ""
             print_info "Restart Claude Code for changes to take effect."
             ;;
@@ -286,7 +322,7 @@ main() {
             show_status
             ;;
         test)
-            test_notification
+            test_notification "$locale" "$directory_format"
             ;;
         help|--help|-h)
             show_help
