@@ -29,6 +29,7 @@ When you invoke a `/skill-name` command in Claude Code:
 | [mermaid-to-img](./mermaid-to-img/) | Convert Mermaid diagrams to high-quality images (PNG/JPG/SVG/PDF) |
 | [mac-notifier](./mac-notifier/) | Send native macOS notifications when Claude Code completes tasks or awaits input |
 | [text-to-audio](./text-to-audio/) | Convert text to speech using easyVoice with multi-character dubbing support |
+| [repo-analyst](./repo-analyst/) | Deep analysis of GitHub repositories with structured research reports |
 
 ## Installation
 

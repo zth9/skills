@@ -35,6 +35,15 @@
       "skills": [
         "./text-to-audio"
       ]
+    },
+    {
+      "name": "repo-analyst",
+      "description": "Deep analysis of GitHub repositories with structured research reports",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./repo-analyst"
+      ]
     }
   ]
 }
