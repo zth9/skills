@@ -58,9 +58,11 @@ After collecting all subagent results:
 4. **Integrate perspectives**: Combine insights from all subagents
 5. **Resolve conflicts**: Address contradictions and gaps
 6. **Synthesize complete professional document**: Structure coherent output
-7. **Auto-save** as `wiki/analysis_<topic>_<date>.md`
-8. **Append to log**: `wiki/log.md` → `## [YYYY-MM-DD] consult | <query>`
+7. **Save to temp directory**: `/tmp/researcher_consult_<topic>_<timestamp>.md`
+8. **Append to log**: `wiki/log.md` → `## [YYYY-MM-DD] consult | <query> | /tmp/researcher_consult_<topic>_<timestamp>.md`
 9. **Present to user**: Output final document with citations
+
+**Note**: Consult results are saved to `/tmp` (not in wiki) as they are query-specific outputs, not persistent knowledge. The log entry records the query and temp file path for reference.
 
 ## Output Document Standards
 
@@ -85,16 +87,21 @@ Based on query type, output complete professional markdown document with applica
 
 ## Analysis Page Format
 
+Consult results are saved to `/tmp` with this format:
+
 ```markdown
 ---
 type: analysis
 query: Original query
 date: YYYY-MM-DD
+timestamp: YYYY-MM-DD_HH-MM-SS
 sources: [source1, source2]
 ---
 # Analysis: Topic
 [Complete professional document content]
 ```
+
+File path: `/tmp/researcher_consult_<topic>_<timestamp>.md`
 
 ## Maintenance Operations
 
@@ -106,7 +113,8 @@ sources: [source1, source2]
 
 ## Notes
 
-- All consult results auto-saved as analysis archive
+- Consult results saved to `/tmp` (not in wiki) as they are query-specific outputs
+- Log entry in `wiki/log.md` records query and temp file path for reference
 - For code analysis, consult phase can directly read code for detailed exploration
 - Images must be saved to `raw/assets/` first, then interpreted by LLM
 - Web scraping uses `/web-access` skill
