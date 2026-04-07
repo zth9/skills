@@ -77,20 +77,50 @@ See `resources/data-integrity-check.md` for detailed guidelines.
 
 **For each source**, after collecting subagent results:
 
-1. Collect results from three subagents
-2. Create/update wiki pages:
-   - `wiki/source_<title>.md` - Source summary
+1. **Generate unique source ID**: `<sanitized_title>_<6_random_chars>` (e.g., `kubernetes_architecture_a3f9d2`)
+2. **Create source directory**: `raw/<source_id>/`
+3. **Save source content**: 
+   - Original content: `raw/<source_id>/content.md` (or `.pdf`, `.txt`, etc.)
+   - Metadata: `raw/<source_id>/metadata.json` (URL, date, type, etc.)
+4. **Create wiki pages**:
+   - `wiki/source_<source_id>.md` - Source summary with link to `raw/<source_id>/`
    - `wiki/entity_<name>.md` - Entity pages
    - `wiki/concept_<name>.md` - Concept pages
-3. Add cross-references `[[page_name]]`
-4. Update `wiki/index.md`
-5. Append to `wiki/log.md`: `## [YYYY-MM-DD] ingest | <title>`
+5. **Add cross-references** `[[page_name]]`
+6. **Update** `wiki/index.md`
+7. **Append to** `wiki/log.md`: `## [YYYY-MM-DD] ingest | <title> | <source_id>`
 
 **After all sources processed**:
 - Present unified summary of all created/updated pages
 - Highlight cross-source connections and patterns discovered
 
-## Code Repository Handling
+## Source Storage Structure
+
+Each source gets its own directory in `raw/`:
+
+```
+raw/
+├── kubernetes_architecture_a3f9d2/
+│   ├── content.md              # Original content
+│   ├── metadata.json           # Source metadata
+│   └── assets/                 # Source-specific images/files
+├── react_hooks_guide_b7e4c1/
+│   ├── content.md
+│   └── metadata.json
+└── assets/                     # Shared assets (deprecated, use source-specific)
+```
+
+**Metadata format** (`metadata.json`):
+```json
+{
+  "source_id": "kubernetes_architecture_a3f9d2",
+  "title": "Kubernetes Architecture Deep Dive",
+  "url": "https://example.com/k8s-arch",
+  "type": "article",
+  "date_ingested": "2026-04-07",
+  "original_format": "html"
+}
+```
 
 - Clone/copy repository to repo directory
 - Research phase: Read key code files, understand architecture

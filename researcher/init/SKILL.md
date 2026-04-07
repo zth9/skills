@@ -16,16 +16,24 @@ The initialized repository will have:
 ├── AGENTS.md          # Wiki schema and conventions (canonical)
 ├── CLAUDE.md          # -> AGENTS.md symlink
 ├── GEMINI.md          # -> AGENTS.md symlink
-├── raw/               # Immutable source documents
-│   └── assets/        # Images and media files
+├── raw/               # Source documents (each in its own directory)
+│   ├── <source_id_1>/
+│   │   ├── content.md
+│   │   ├── metadata.json
+│   │   └── assets/    # Source-specific images/files
+│   └── <source_id_2>/
+│       ├── content.md
+│       └── metadata.json
 └── wiki/
     ├── index.md       # Content catalog
     ├── log.md         # Operation log
     ├── source_*.md    # Source summary pages
     ├── entity_*.md    # Entity pages (people, orgs, products)
     ├── concept_*.md   # Concept pages
-    └── analysis_*.md  # Analysis pages (consult results)
+    └── analysis_*.md  # Analysis pages (deprecated, use /tmp for consult)
 ```
+
+**Note**: Each source gets a unique directory `raw/<source_id>/` where `source_id` is `<sanitized_title>_<6_random_chars>`.
 
 ## Workflow
 

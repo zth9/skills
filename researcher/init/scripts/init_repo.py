@@ -13,8 +13,10 @@ def init_repo(repo_path: str):
 
     # Create main directories
     (repo / "raw").mkdir(parents=True, exist_ok=True)
-    (repo / "raw" / "assets").mkdir(exist_ok=True)
     (repo / "wiki").mkdir(exist_ok=True)
+
+    # Note: raw/assets/ is deprecated, each source gets its own directory
+    # raw/<source_id>/assets/ for source-specific files
 
     # Create index.md
     index_path = repo / "wiki" / "index.md"
