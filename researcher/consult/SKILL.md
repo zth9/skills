@@ -59,10 +59,9 @@ After collecting all subagent results:
 5. **Resolve conflicts**: Address contradictions and gaps
 6. **Synthesize complete professional document**: Structure coherent output
 7. **Save to temp directory**: `/tmp/researcher_consult_<topic>_<timestamp>.md`
-8. **Append to log**: `wiki/log.md` → `## [YYYY-MM-DD] consult | <query> | /tmp/researcher_consult_<topic>_<timestamp>.md`
-9. **Present to user**: Output final document with citations
+8. **Present to user**: Output final document with citations
 
-**Note**: Consult results are saved to `/tmp` (not in wiki) as they are query-specific outputs, not persistent knowledge. The log entry records the query and temp file path for reference.
+**IMPORTANT**: Consult is read-only. Do NOT modify any wiki files. Only read from wiki and output to `/tmp`.
 
 ## Output Document Standards
 
@@ -113,8 +112,9 @@ File path: `/tmp/researcher_consult_<topic>_<timestamp>.md`
 
 ## Notes
 
+- **Read-only operation**: Consult does NOT modify wiki files, only reads from them
 - Consult results saved to `/tmp` (not in wiki) as they are query-specific outputs
-- Log entry in `wiki/log.md` records query and temp file path for reference
+- No log entry written to `wiki/log.md` - consult is completely non-invasive
 - For code analysis, consult phase can directly read code for detailed exploration
 - Images must be saved to `raw/assets/` first, then interpreted by LLM
 - Web scraping uses `/web-access` skill
