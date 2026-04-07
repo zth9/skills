@@ -5,16 +5,62 @@ description: Query knowledge from research wiki and output comprehensive profess
 
 # Researcher Consult
 
-Query knowledge from the research wiki and synthesize comprehensive professional documents.
+Query knowledge from the research wiki and synthesize comprehensive professional documents using multi-agent analysis.
+
+## Multi-Agent Analysis Workflow
+
+**REQUIRED**: Always deploy **at least 3 parallel subagents** to analyze from different perspectives:
+
+**Agent 1 - Knowledge Synthesizer**
+- Read and synthesize relevant wiki pages
+- Connect concepts across different sources
+- Build comprehensive knowledge map for the query
+
+**Agent 2 - Deep Diver**
+- Explore source documents and code in detail
+- Extract specific examples, data, and evidence
+- Verify claims and trace back to original sources
+
+**Agent 3 - Critical Analyst**
+- Identify gaps, contradictions, and limitations
+- Question assumptions and challenge conclusions
+- Highlight what's unknown or uncertain
+
+**Optional additional agents** (based on query complexity):
+- **Practical Implementer**: Focus on actionable steps and code examples
+- **Comparative Analyst**: Compare different approaches and tradeoffs
+- **Domain Expert**: Apply domain-specific knowledge and best practices
+
+## Main-Agent Synthesis
+
+After collecting all subagent results:
+
+1. **Integrate perspectives**: Combine insights from all agents
+2. **Resolve conflicts**: Address contradictions between agents
+3. **Structure output**: Organize into coherent professional document
+4. **Add citations**: Link back to wiki pages and sources
+5. **Highlight confidence**: Mark areas of certainty vs. uncertainty
 
 ## Workflow
 
-1. Read `wiki/index.md` to find relevant pages
-2. Read identified wiki pages (use grep if needed)
-3. If needed, perform supplementary exploration of code repos or source documents
-4. Synthesize **complete professional document**
-5. **Auto-save** as `wiki/analysis_<topic>_<date>.md`
-6. Append to `wiki/log.md`: `## [YYYY-MM-DD] consult | <query>`
+### Phase 1: Multi-Agent Parallel Analysis
+
+1. **Identify relevant wiki pages**: Read `wiki/index.md` to find related content
+2. **Launch 3+ subagents in parallel**: Each agent independently:
+   - Reads identified wiki pages (use grep if needed)
+   - Explores source documents and code repos as needed
+   - Analyzes from their specific perspective (Synthesizer/Diver/Critic)
+   - Produces their findings and insights
+3. **Collect agent results**: Wait for all agents to complete
+
+### Phase 2: Main-Agent Synthesis
+
+4. **Integrate perspectives**: Combine insights from all subagents
+5. **Resolve conflicts**: Address contradictions and gaps
+6. **Synthesize complete professional document**: Structure coherent output
+7. **Auto-save** as `wiki/analysis_<topic>_<date>.md`
+8. **Append to log**: `wiki/log.md` → `## [YYYY-MM-DD] consult | <query>`
+9. **Present to user**: Output final document with citations
 
 ## Output Document Standards
 
