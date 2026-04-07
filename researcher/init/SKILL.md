@@ -29,12 +29,28 @@ The initialized repository will have:
 
 ## Workflow
 
-1. Ask user for repository path (default: `./research`)
+1. **Check current directory**:
+   - If current directory is NOT a git repository → Initialize wiki structure in current directory (`.`)
+   - If current directory IS a git repository → Ask user for repository path (default: `./research`)
+
 2. Run initialization script:
    ```bash
    python scripts/init_repo.py <path>
    ```
+
 3. Confirm structure created and explain next steps
+
+## Path Selection Logic
+
+**Non-git directory** (recommended for dedicated wiki repos):
+- Initialize directly in current directory
+- The entire directory becomes the wiki repository
+- No subdirectory needed
+
+**Git repository** (for project-embedded wikis):
+- Create `./research` subdirectory by default
+- Keeps wiki separate from project code
+- User can specify alternative path if needed
 
 ## Next Steps
 
