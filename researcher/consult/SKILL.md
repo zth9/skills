@@ -1,5 +1,5 @@
 ---
-name: consult
+name: researcher:consult
 description: Query knowledge from research wiki and output comprehensive professional documents. Use when user asks questions about researched topics, wants to synthesize knowledge, or says "consult", "query", "ask", "summarize findings".
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: research
+name: researcher:research
 description: Ingest sources (files, URLs, code repos) into research wiki with multi-agent analysis. Use when user provides source materials to analyze, wants to add knowledge to the wiki, or says "research", "ingest", "analyze", "add source".
 ---
 

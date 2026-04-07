@@ -1,5 +1,5 @@
 ---
-name: init
+name: researcher:init
 description: Initialize a research repository with LLM Wiki structure. Use when user wants to create a new research repository, set up knowledge base structure, or says "init", "initialize", "create repo", "setup research".
 ---
 
