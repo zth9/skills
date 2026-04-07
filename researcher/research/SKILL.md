@@ -17,6 +17,23 @@ Ingest and organize sources into the research wiki using multi-agent parallel an
 | Transcripts/Subtitles | Read text content directly |
 | Code Repositories | Clone to repo directory, analyze code files |
 
+## Data Integrity Check
+
+**CRITICAL**: When saving large content (especially from web sources), always verify data completeness:
+
+1. **For tool results saved to temp files** (e.g., `/path/to/tool-results/xxx.txt`):
+   - Extract raw data using `jq` or `cat`, NOT manual construction
+   - Example: `cat tool-results/xxx.txt | jq -r '.value.textContent' > raw/article.md`
+
+2. **Verify file size after saving**:
+   ```bash
+   wc -c raw/article.md  # Should match source size
+   ```
+
+3. **Only proceed with analysis if verification passes**
+
+See `resources/data-integrity-check.md` for detailed guidelines.
+
 ## Multi-Agent Workflow
 
 Deploy **3 parallel subagents** with first-principles thinking:
