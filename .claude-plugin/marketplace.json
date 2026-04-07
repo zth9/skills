@@ -42,7 +42,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./researcher"
+        "./researcher/init",
+        "./researcher/research",
+        "./researcher/consult"
       ]
     }
   ]
