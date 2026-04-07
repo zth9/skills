@@ -1,5 +1,7 @@
-node_modules/
+.venv/
+asset/
 .DS_Store
-scripts/easyvoice/
 *.log
-.easyvoice.pid
+*.wav
+*.mp3
+__pycache__/

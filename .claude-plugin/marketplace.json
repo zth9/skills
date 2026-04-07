@@ -29,7 +29,7 @@
     },
     {
       "name": "text-to-audio",
-      "description": "Convert text to speech using easyVoice with multi-character dubbing support",
+      "description": "Convert text to natural speech using ChatTTS local AI model",
       "source": "./",
       "strict": false,
       "skills": [
@@ -43,6 +43,15 @@
       "strict": false,
       "skills": [
         "./repo-analyst"
+      ]
+    },
+    {
+      "name": "researcher",
+      "description": "Build and maintain persistent personal knowledge base for deep technical research",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./researcher"
       ]
     }
   ]
