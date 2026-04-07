@@ -7,6 +7,21 @@ description: Ingest sources (files, URLs, code repos) into research wiki with mu
 
 Ingest and organize sources into the research wiki using multi-agent parallel analysis.
 
+## Multi-Source Support
+
+**When multiple sources are provided**, process them in parallel:
+
+1. **Parse input**: Extract all source identifiers (files, URLs, repos)
+2. **Parallel processing**: Launch independent research workflows for each source simultaneously
+3. **Each source gets full multi-agent analysis**: 3 subagents (Theory/Practice/Critical) per source
+4. **Aggregate results**: Collect all wiki updates and present unified summary
+
+**Example**:
+```
+/researcher:research https://example.com/article1 https://example.com/article2 ./paper.pdf
+```
+→ Launches 3 parallel research workflows, each with 3 subagents (9 agents total)
+
 ## Source Types
 
 | Source Type | Processing |
@@ -36,7 +51,7 @@ See `resources/data-integrity-check.md` for detailed guidelines.
 
 ## Multi-Agent Workflow
 
-Deploy **3 parallel subagents** with first-principles thinking:
+**For each source**, deploy **3 parallel subagents** with first-principles thinking:
 
 **Agent 1 - Theory Analyst**
 - Extract core concepts, principles, models, architecture
@@ -53,7 +68,14 @@ Deploy **3 parallel subagents** with first-principles thinking:
 - Flag unresolved challenges and open questions
 - Compare pros/cons of different approaches
 
+**Parallelization strategy**:
+- Single source: 3 subagents in parallel
+- Multiple sources: Launch all sources simultaneously, each with 3 subagents
+- Example: 3 sources = 9 subagents running in parallel (3 per source)
+
 ## Main-Agent Synthesis
+
+**For each source**, after collecting subagent results:
 
 1. Collect results from three subagents
 2. Create/update wiki pages:
@@ -63,7 +85,10 @@ Deploy **3 parallel subagents** with first-principles thinking:
 3. Add cross-references `[[page_name]]`
 4. Update `wiki/index.md`
 5. Append to `wiki/log.md`: `## [YYYY-MM-DD] ingest | <title>`
-6. Output summary of created/updated pages
+
+**After all sources processed**:
+- Present unified summary of all created/updated pages
+- Highlight cross-source connections and patterns discovered
 
 ## Code Repository Handling
 
