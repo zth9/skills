@@ -29,7 +29,6 @@ Skills 是可复用的工具和脚本，用于增强 AI 编程助手（如 Claud
 | [mermaid-to-img](./mermaid-to-img/) | 将 Mermaid 图表转换为高质量图片（PNG/JPG/SVG/PDF） |
 | [mac-notifier](./mac-notifier/) | 当 Claude Code 完成任务或等待输入时发送 macOS 原生通知 |
 | [text-to-audio](./text-to-audio/) | 使用 ChatTTS 本地 AI 模型将文本转换为自然语音 |
-| [repo-analyst](./repo-analyst/) | 深度分析 GitHub 开源仓库，输出结构化研究报告 |
 | [researcher](./researcher/) | 构建并维护持久化个人知识库，专为深度技术研究设计 |
 
 ## 安装

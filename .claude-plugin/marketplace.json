@@ -37,15 +37,6 @@
       ]
     },
     {
-      "name": "repo-analyst",
-      "description": "Deep analysis of GitHub repositories with structured research reports",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./repo-analyst"
-      ]
-    },
-    {
       "name": "researcher",
       "description": "Build and maintain persistent personal knowledge base for deep technical research",
       "source": "./",
