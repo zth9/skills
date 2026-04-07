@@ -27,10 +27,12 @@ The initialized repository will have:
 └── wiki/
     ├── index.md       # Content catalog
     ├── log.md         # Operation log
-    ├── source_*.md    # Source summary pages
-    ├── entity_*.md    # Entity pages (people, orgs, products)
-    ├── concept_*.md   # Concept pages
-    └── analysis_*.md  # Analysis pages (deprecated, use /tmp for consult)
+    ├── sources/       # Source summary pages
+    │   └── <source_id>.md
+    ├── entities/      # Entity pages (people, orgs, products)
+    │   └── <name>.md
+    └── concepts/      # Concept pages
+        └── <name>.md
 ```
 
 **Note**: Each source gets a unique directory `raw/<source_id>/` where `source_id` is `<sanitized_title>_<6_random_chars>`.

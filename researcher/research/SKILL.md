@@ -83,9 +83,9 @@ See `resources/data-integrity-check.md` for detailed guidelines.
    - Original content: `raw/<source_id>/content.md` (or `.pdf`, `.txt`, etc.)
    - Metadata: `raw/<source_id>/metadata.json` (URL, date, type, etc.)
 4. **Create wiki pages**:
-   - `wiki/source_<source_id>.md` - Source summary with link to `raw/<source_id>/`
-   - `wiki/entity_<name>.md` - Entity pages
-   - `wiki/concept_<name>.md` - Concept pages
+   - `wiki/sources/<source_id>.md` - Source summary with link to `raw/<source_id>/`
+   - `wiki/entities/<name>.md` - Entity pages
+   - `wiki/concepts/<name>.md` - Concept pages
 5. **Add cross-references** `[[page_name]]`
 6. **Update** `wiki/index.md`
 7. **Append to** `wiki/log.md`: `## [YYYY-MM-DD] ingest | <title> | <source_id>`
@@ -129,10 +129,11 @@ raw/
 
 ## Wiki Page Format
 
-### Source Summary (`source_*.md`)
+### Source Summary (`wiki/sources/<source_id>.md`)
 ```markdown
 ---
-source: raw/filename
+source_id: kubernetes_architecture_a3f9d2
+source_path: raw/kubernetes_architecture_a3f9d2/
 date: YYYY-MM-DD
 type: article|paper|code|video|conversation
 ---
@@ -140,11 +141,11 @@ type: article|paper|code|video|conversation
 ## Key Points
 ## Core Arguments
 ## Related
-- [[concept_name]]
-- [[entity_name]]
+- [[concepts/container_orchestration]]
+- [[entities/kubernetes_foundation]]
 ```
 
-### Concept Page (`concept_*.md`)
+### Concept Page (`wiki/concepts/<name>.md`)
 ```markdown
 ---
 type: concept
@@ -154,5 +155,18 @@ type: concept
 ## Implementation Mechanism
 ## Evolution (Cross-source Comparison)
 ## Related Concepts
-- [[related_concept]]
+- [[concepts/related_concept]]
+```
+
+### Entity Page (`wiki/entities/<name>.md`)
+```markdown
+---
+type: entity
+category: person|organization|product|project
+---
+# Entity: Name
+## Description
+## Mentions Across Sources
+## Relationships
+- [[entities/related_entity]]
 ```

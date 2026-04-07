@@ -14,6 +14,9 @@ def init_repo(repo_path: str):
     # Create main directories
     (repo / "raw").mkdir(parents=True, exist_ok=True)
     (repo / "wiki").mkdir(exist_ok=True)
+    (repo / "wiki" / "sources").mkdir(exist_ok=True)
+    (repo / "wiki" / "entities").mkdir(exist_ok=True)
+    (repo / "wiki" / "concepts").mkdir(exist_ok=True)
 
     # Note: raw/assets/ is deprecated, each source gets its own directory
     # raw/<source_id>/assets/ for source-specific files
